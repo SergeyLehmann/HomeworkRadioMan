@@ -54,12 +54,36 @@ public class RadioTest {
     }
 
     @Test
+    public void ShouldStayZeroIfUserTryToSetLess() {
+        Radio Volume = new Radio();
+        Volume.volume = -1;
+        Volume.decreaseVolume();
+
+        int expected = 0;
+        int actual = Volume.volume;
+
+        Assertions.assertEquals(expected, actual);
+    }
+
+    @Test
     public void ShouldStayMaximumIfCurrentMax() {
         Radio Volume = new Radio();
-        Volume.volume = 10;
+        Volume.volume = 100;
         Volume.increaseVolume();
 
-        int expected = 10;
+        int expected = 100;
+        int actual = Volume.volume;
+
+        Assertions.assertEquals(expected, actual);
+    }
+
+    @Test
+    public void ShouldStayMaximumIfUserTryToSetMore() {
+        Radio Volume = new Radio();
+        Volume.volume = 101;
+        Volume.increaseVolume();
+
+        int expected = 100;
         int actual = Volume.volume;
 
         Assertions.assertEquals(expected, actual);
@@ -79,7 +103,7 @@ public class RadioTest {
     }
 
     @Test
-    public void ShouldDecreaseChannelIfZero() {
+    public void ShouldCycleChannelIfCurrentIsMinimal() {
         Radio decreaseChannelifZero = new Radio();
         decreaseChannelifZero.channel = 0;
         decreaseChannelifZero.decreaseChannel();
@@ -91,7 +115,7 @@ public class RadioTest {
     }
 
     @Test
-    public void ShouldCycleChannelIfMax() {
+    public void ShouldCycleChannelIfCurrentMax() {
         Radio radio = new Radio();
         radio.channel = 9;
         radio.increaseChannel();
@@ -116,7 +140,7 @@ public class RadioTest {
     }
 
     @Test
-    public void ShouldStayTheSameIfLessThenZero() {
+    public void ChannelShouldStayTheSameIfLessThenZero() {
         Radio radio = new Radio();
         radio.setCurrentChannel(-1);
         radio.getCurrentChannel();
@@ -127,7 +151,7 @@ public class RadioTest {
     }
 
     @Test
-    public void ShouldStayYheSameIfMoreThenMax() {
+    public void ChannelShouldStayTheSameIfCurrentMax() {
         Radio radio = new Radio();
         radio.setCurrentChannel(10);
         radio.getCurrentChannel();
@@ -136,5 +160,14 @@ public class RadioTest {
         int actual = radio.getCurrentChannel();
         Assertions.assertEquals(expected, actual);
     }
-}
 
+    @Test
+    public void ShouldSetRightAmountOfChannels() {
+        Radio radio = new Radio(20);
+
+        radio.setCurrentChannel(19);
+        int expected = 19;
+        int actual = radio.getCurrentChannel();
+        Assertions.assertEquals(expected, actual);
+    }
+}
