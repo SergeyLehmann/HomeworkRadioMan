@@ -1,14 +1,27 @@
 package ru.netology;
 
-public class Radio { protected int volume;
+public class Radio {
+    protected int volume;
     protected int channel;
+    protected int maxChannel;
+
+    protected int maxVolume = 100;
+    protected int minVolume = 0;
+
+    public Radio() {
+        maxChannel = 9;
+    }
+
+    public Radio(int channelCount) {
+        maxChannel = channelCount - 1;
+    }
 
     protected int getCurrentChannel() {
         return channel;
     }
 
     protected void setCurrentChannel(int newChannel) {
-        if (newChannel > 9) {
+        if (newChannel > maxChannel) {
             return;
         }
         if (newChannel < 0) {
@@ -17,8 +30,6 @@ public class Radio { protected int volume;
             channel = newChannel;
         }
     }
-
-    protected int maxVolume = 10;
 
     public void increaseVolume() {
         boolean Volume;
@@ -29,28 +40,24 @@ public class Radio { protected int volume;
         }
     }
 
-    protected int minVolume = 0;
-
     public void decreaseVolume() {
         if (volume > minVolume) {
             volume -= 1;
+        } else {
+            volume = 0;
         }
     }
-
-    protected int maxChannel = 9;
 
     public void increaseChannel() {
         if (channel < maxChannel) {
             channel += 1;
         } else {
-            channel = minChannel;
+            channel = 0;
         }
     }
 
-    protected int minChannel = 0;
-
     public void decreaseChannel() {
-        if (channel > minChannel) {
+        if (channel > 0) {
             channel -= 1;
         } else {
             channel = maxChannel;
